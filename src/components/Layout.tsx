@@ -50,29 +50,30 @@ export default function Layout({
 
   return (
     <div className="flex flex-col w-full h-screen bg-gray-50 overflow-hidden font-sans">
-      {/* Top Bar */}
-      <header className="flex-none h-16 bg-white border-b flex items-center justify-between px-6 shrink-0 gap-4">
-        <div className="flex items-center space-x-4 min-w-0 flex-1">
-          <div className="flex space-x-2 shrink-0">
+      {/* Top Bar. 휴대폰처럼 폭·높이가 모두 좁은 화면에서는 두 줄로 접히고(flex-wrap),
+          글자·아이콘 크기가 줄어든다(sm: 이상에서는 기존 데스크톱/태블릿 모습 그대로). */}
+      <header className="flex-none bg-white border-b shrink-0 flex flex-wrap items-center justify-between gap-x-3 gap-y-1.5 px-3 py-1.5 sm:h-16 sm:px-6 sm:py-0">
+        <div className="flex items-center gap-2 sm:gap-4 min-w-0">
+          <div className="flex gap-1 sm:gap-2 shrink-0">
             {steps.map((s, idx) => (
               <div
                 key={s}
-                className={`w-8 h-8 flex items-center justify-center rounded-full font-bold
+                className={`w-6 h-6 sm:w-8 sm:h-8 flex items-center justify-center rounded-full font-bold text-xs sm:text-base
                   ${s === step ? 'bg-blue-600 text-white' : 'bg-gray-200 text-gray-500'}`}
               >
                 {idx + 1}
               </div>
             ))}
           </div>
-          <h2 className="text-xl font-bold text-gray-800 ml-4 truncate" title={question}>{question}</h2>
+          <h2 className="text-sm sm:text-xl font-bold text-gray-800 sm:ml-4 truncate max-w-[40vw] sm:max-w-none" title={question}>{question}</h2>
         </div>
-        <div className="flex items-center space-x-4 shrink-0">
+        <div className="flex flex-wrap items-center gap-2 sm:gap-4 sm:shrink-0">
           {(onPrev || onNext) && (
-            <div className="flex items-center space-x-2 pr-4 border-r whitespace-nowrap">
+            <div className="flex items-center gap-2 sm:pr-4 sm:border-r whitespace-nowrap">
               {onPrev && (
                 <button
                   onClick={onPrev}
-                  className="px-4 py-2 bg-gray-200 text-gray-700 rounded font-bold text-sm hover:bg-gray-300 transition-colors"
+                  className="px-2.5 py-1 sm:px-4 sm:py-2 bg-gray-200 text-gray-700 rounded font-bold text-xs sm:text-sm hover:bg-gray-300 transition-colors"
                 >
                   {prevLabel}
                 </button>
@@ -82,7 +83,7 @@ export default function Layout({
                   onClick={onNext}
                   disabled={effectiveNextDisabled}
                   title={teacherBlocksNext ? '선생님이 아직 다음 화면을 열지 않았습니다' : undefined}
-                  className={`px-4 py-2 rounded font-bold text-sm transition-colors ${
+                  className={`px-2.5 py-1 sm:px-4 sm:py-2 rounded font-bold text-xs sm:text-sm transition-colors ${
                     effectiveNextDisabled
                       ? 'bg-gray-200 text-gray-400 cursor-not-allowed'
                       : 'bg-blue-600 text-white hover:bg-blue-700 shadow-md'
@@ -93,7 +94,7 @@ export default function Layout({
               )}
             </div>
           )}
-          <span className="text-gray-600 font-medium">학번: {studentId || '입력 안 됨'}</span>
+          <span className="hidden sm:inline text-gray-600 font-medium text-sm">학번: {studentId || '입력 안 됨'}</span>
           <button
             onClick={() => {
               if (window.confirm('모든 기록을 지우고 처음부터 다시 시작하시겠습니까?')) {
@@ -103,17 +104,17 @@ export default function Layout({
                 window.location.href = import.meta.env.BASE_URL;
               }
             }}
-            className="px-3 py-1 bg-red-50 text-red-600 border border-red-200 rounded text-sm font-bold hover:bg-red-100"
+            className="px-2 py-1 sm:px-3 bg-red-50 text-red-600 border border-red-200 rounded text-xs sm:text-sm font-bold hover:bg-red-100 whitespace-nowrap"
           >
             처음부터
           </button>
-          <button className="w-8 h-8 bg-gray-200 rounded-full flex items-center justify-center font-bold text-gray-600 hover:bg-gray-300">
+          <button className="hidden sm:flex w-8 h-8 bg-gray-200 rounded-full items-center justify-center font-bold text-gray-600 hover:bg-gray-300">
             ?
           </button>
           <div className="relative">
             <button
               onClick={() => setShowSettingsInput((v) => !v)}
-              className="px-2 py-1 text-xs text-gray-400 hover:text-gray-600 underline whitespace-nowrap"
+              className="px-1.5 py-1 text-[11px] sm:text-xs text-gray-400 hover:text-gray-600 underline whitespace-nowrap"
             >
               수업 코드{classSettingsCode ? `: ${classSettingsCode}` : ''}
             </button>
@@ -181,32 +182,33 @@ export default function Layout({
         )}
       </div>
 
-      {/* Main Content Area - Mobile/Tablet (<1024px) */}
+      {/* Main Content Area - Mobile/Tablet (<1024px). 휴대폰 가로처럼 세로 폭 자체가 짧은 화면도
+          있어서, 시뮬레이션 영역은 vh 비율에 min/max 상한을 같이 둬 너무 커지거나 작아지지 않게 한다. */}
       <div className="flex lg:hidden flex-col flex-1 overflow-hidden">
         {/* 시뮬레이션 상단 고정 */}
-        <div className="h-[45vh] bg-white border-b flex flex-col shrink-0 p-4">
+        <div className="h-[38vh] min-h-[130px] max-h-[260px] bg-white border-b flex flex-col shrink-0 p-2 sm:p-4">
           {simulationArea}
         </div>
 
         {/* 탭 네비게이션 */}
-        <div className="flex bg-gray-100 border-b">
-          <button 
-            className={`flex-1 py-3 font-bold ${activeTab === 'expected' ? 'bg-white text-blue-600 border-b-2 border-blue-600' : 'text-gray-500'}`}
+        <div className="flex bg-gray-100 border-b shrink-0">
+          <button
+            className={`flex-1 py-2 sm:py-3 text-sm sm:text-base font-bold ${activeTab === 'expected' ? 'bg-white text-blue-600 border-b-2 border-blue-600' : 'text-gray-500'}`}
             onClick={() => setActiveTab('expected')}
           >
             나의 예상
           </button>
           {observedArea && (
-            <button 
-              className={`flex-1 py-3 font-bold ${activeTab === 'observed' ? 'bg-white text-blue-600 border-b-2 border-blue-600' : 'text-gray-500'}`}
+            <button
+              className={`flex-1 py-2 sm:py-3 text-sm sm:text-base font-bold ${activeTab === 'observed' ? 'bg-white text-blue-600 border-b-2 border-blue-600' : 'text-gray-500'}`}
               onClick={() => setActiveTab('observed')}
             >
               관찰 결과
             </button>
           )}
           {bottomArea && (
-            <button 
-              className={`flex-1 py-3 font-bold ${activeTab === 'bottom' ? 'bg-white text-blue-600 border-b-2 border-blue-600' : 'text-gray-500'}`}
+            <button
+              className={`flex-1 py-2 sm:py-3 text-sm sm:text-base font-bold ${activeTab === 'bottom' ? 'bg-white text-blue-600 border-b-2 border-blue-600' : 'text-gray-500'}`}
               onClick={() => setActiveTab('bottom')}
             >
               최종 기록
@@ -215,7 +217,7 @@ export default function Layout({
         </div>
 
         {/* 탭 내용 영역 */}
-        <div className="flex-1 overflow-y-auto bg-white p-4">
+        <div className="flex-1 overflow-y-auto bg-white p-3 sm:p-4">
           {activeTab === 'expected' && expectedArea}
           {activeTab === 'observed' && observedArea}
           {activeTab === 'bottom' && bottomArea}
