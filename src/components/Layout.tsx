@@ -98,7 +98,9 @@ export default function Layout({
             onClick={() => {
               if (window.confirm('모든 기록을 지우고 처음부터 다시 시작하시겠습니까?')) {
                 localStorage.clear();
-                window.location.href = '/';
+                // '/'로 고정하면 GitHub Pages처럼 하위 경로(/collision-sim/)에 배포됐을 때
+                // 사이트 자체가 없는 도메인 루트로 가버린다. 실제 배포 경로(BASE_URL)로 이동해야 한다.
+                window.location.href = import.meta.env.BASE_URL;
               }
             }}
             className="px-3 py-1 bg-red-50 text-red-600 border border-red-200 rounded text-sm font-bold hover:bg-red-100"
