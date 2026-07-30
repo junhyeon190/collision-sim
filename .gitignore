@@ -1,0 +1,17 @@
+node_modules
+dist
+.DS_Store
+*.local
+
+# 개발 중 임시로 만든 디버깅/스크린샷 스크립트 (앱 동작과 무관, 저장소에는 안 올림)
+capture.js
+check.ts
+measure.js
+open_browser.js
+open_browser2.js
+test.js
+test2.js
+test_radio.js
+files.zip
+screenshot_before_play.png
+screen2_overlap.png
