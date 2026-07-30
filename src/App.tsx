@@ -7,12 +7,17 @@ import ResultCode from './pages/ResultCode';
 import Studio from './pages/Studio';
 import Teacher from './pages/Teacher';
 
+// react-router-dom의 basename은 끝에 슬래시가 없어야 한다(공식 예시: "/app").
+// Vite의 BASE_URL은 항상 끝에 슬래시가 붙어 나오므로(예: "/collision-sim/") 그대로 넘기면
+// 라우터가 어떤 경로도 매칭하지 못하고 catch-all(*)로 떨어져 항상 /lab/0으로 리다이렉트된다.
+const basename = import.meta.env.BASE_URL.replace(/\/$/, '') || '/';
+
 export default function App() {
   return (
     <ErrorBoundary>
       <OrientationLock />
       <BrowserRouter
-        basename={import.meta.env.BASE_URL}
+        basename={basename}
         future={{ v7_startTransition: true, v7_relativeSplatPath: true }}
       >
         <Routes>
