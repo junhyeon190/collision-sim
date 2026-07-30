@@ -18,7 +18,7 @@ export default function StudioLayout({
   return (
     <div className="min-h-screen bg-gray-50 flex flex-col">
       {/* 휴대폰처럼 폭이 좁은 화면에서는 두 줄로 접힌다(flex-wrap). sm 이상에서는 기존 모습 그대로. */}
-      <header className="bg-white border-b px-3 py-2 sm:px-6 sm:py-4 flex flex-wrap items-center justify-between gap-x-3 gap-y-1.5 shrink-0 print:hidden">
+      <header className="bg-white border-b px-3 py-2.5 sm:px-6 sm:py-4 flex flex-wrap items-center justify-between gap-x-3 gap-y-2 shrink-0 print:hidden">
         <div className="flex items-center gap-2 sm:gap-3 min-w-0">
           <span className="hidden sm:inline text-indigo-600 font-bold shrink-0 whitespace-nowrap">설계 스튜디오</span>
           <div className="flex gap-1 shrink-0">
@@ -59,7 +59,7 @@ export default function StudioLayout({
           )}
         </div>
       </header>
-      <main className="flex-1 overflow-y-auto p-3 sm:p-6">
+      <main className="flex-1 overflow-y-auto p-4 sm:p-6">
         <div className="max-w-3xl mx-auto pb-10">{children}</div>
       </main>
     </div>

@@ -52,7 +52,7 @@ export default function Layout({
     <div className="flex flex-col w-full h-screen bg-gray-50 overflow-hidden font-sans">
       {/* Top Bar. 휴대폰처럼 폭·높이가 모두 좁은 화면에서는 두 줄로 접히고(flex-wrap),
           글자·아이콘 크기가 줄어든다(sm: 이상에서는 기존 데스크톱/태블릿 모습 그대로). */}
-      <header className="flex-none bg-white border-b shrink-0 flex flex-wrap items-center justify-between gap-x-3 gap-y-1.5 px-3 py-1.5 sm:h-16 sm:px-6 sm:py-0">
+      <header className="flex-none bg-white border-b shrink-0 flex flex-wrap items-center justify-between gap-x-3 gap-y-2 px-3 py-2.5 sm:h-16 sm:px-6 sm:py-0">
         <div className="flex items-center gap-2 sm:gap-4 min-w-0">
           <div className="flex gap-1 sm:gap-2 shrink-0">
             {steps.map((s, idx) => (
@@ -182,25 +182,26 @@ export default function Layout({
         )}
       </div>
 
-      {/* Main Content Area - Mobile/Tablet (<1024px). 휴대폰 가로처럼 세로 폭 자체가 짧은 화면도
-          있어서, 시뮬레이션 영역은 vh 비율에 min/max 상한을 같이 둬 너무 커지거나 작아지지 않게 한다. */}
+      {/* Main Content Area - Mobile/Tablet (<1024px). 세로·가로 모두 지원한다.
+          세로(휴대폰을 세워 든 상태)일 때 화면 높이가 넉넉하므로 시뮬레이션 영역을 더 크게,
+          가로일 때는 화면 높이가 짧으므로 min-h로 바닥을 깔아 너무 눌리지 않게 한다. */}
       <div className="flex lg:hidden flex-col flex-1 overflow-hidden">
         {/* 시뮬레이션 상단 고정 */}
-        <div className="h-[38vh] min-h-[130px] max-h-[260px] bg-white border-b flex flex-col shrink-0 p-2 sm:p-4">
+        <div className="h-[42vh] min-h-[220px] max-h-[420px] bg-white border-b flex flex-col shrink-0 p-3 sm:p-4">
           {simulationArea}
         </div>
 
         {/* 탭 네비게이션 */}
         <div className="flex bg-gray-100 border-b shrink-0">
           <button
-            className={`flex-1 py-2 sm:py-3 text-sm sm:text-base font-bold ${activeTab === 'expected' ? 'bg-white text-blue-600 border-b-2 border-blue-600' : 'text-gray-500'}`}
+            className={`flex-1 py-2.5 sm:py-3 text-sm sm:text-base font-bold ${activeTab === 'expected' ? 'bg-white text-blue-600 border-b-2 border-blue-600' : 'text-gray-500'}`}
             onClick={() => setActiveTab('expected')}
           >
             나의 예상
           </button>
           {observedArea && (
             <button
-              className={`flex-1 py-2 sm:py-3 text-sm sm:text-base font-bold ${activeTab === 'observed' ? 'bg-white text-blue-600 border-b-2 border-blue-600' : 'text-gray-500'}`}
+              className={`flex-1 py-2.5 sm:py-3 text-sm sm:text-base font-bold ${activeTab === 'observed' ? 'bg-white text-blue-600 border-b-2 border-blue-600' : 'text-gray-500'}`}
               onClick={() => setActiveTab('observed')}
             >
               관찰 결과
@@ -208,7 +209,7 @@ export default function Layout({
           )}
           {bottomArea && (
             <button
-              className={`flex-1 py-2 sm:py-3 text-sm sm:text-base font-bold ${activeTab === 'bottom' ? 'bg-white text-blue-600 border-b-2 border-blue-600' : 'text-gray-500'}`}
+              className={`flex-1 py-2.5 sm:py-3 text-sm sm:text-base font-bold ${activeTab === 'bottom' ? 'bg-white text-blue-600 border-b-2 border-blue-600' : 'text-gray-500'}`}
               onClick={() => setActiveTab('bottom')}
             >
               최종 기록
@@ -217,7 +218,7 @@ export default function Layout({
         </div>
 
         {/* 탭 내용 영역 */}
-        <div className="flex-1 overflow-y-auto bg-white p-3 sm:p-4">
+        <div className="flex-1 overflow-y-auto bg-white p-4">
           {activeTab === 'expected' && expectedArea}
           {activeTab === 'observed' && observedArea}
           {activeTab === 'bottom' && bottomArea}

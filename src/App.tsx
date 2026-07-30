@@ -1,6 +1,5 @@
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import ErrorBoundary from './components/ErrorBoundary';
-import OrientationLock from './components/OrientationLock';
 import Lab from './pages/Lab';
 import ExitQuestions from './pages/ExitQuestions';
 import ResultCode from './pages/ResultCode';
@@ -15,7 +14,6 @@ const basename = import.meta.env.BASE_URL.replace(/\/$/, '') || '/';
 export default function App() {
   return (
     <ErrorBoundary>
-      <OrientationLock />
       <BrowserRouter
         basename={basename}
         future={{ v7_startTransition: true, v7_relativeSplatPath: true }}
